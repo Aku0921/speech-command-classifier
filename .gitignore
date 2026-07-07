@@ -1,4 +1,22 @@
+# Virtual environment
 .venv/
+
+# Python cache
 __pycache__/
 *.pyc
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Generated results
 results/
+
+# Model cache (optional)
+models/
+
+# Jupyter
+.ipynb_checkpoints/
