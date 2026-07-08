@@ -3,59 +3,50 @@ Can you enable Do Not Disturb?,activate_do_not_disturb
 I want Do Not Disturb turned on,activate_do_not_disturb
 Mute notifications with Do Not Disturb,activate_do_not_disturb
 
-text,label
 Can you disable Do Not Disturb?,deactivate_do_not_disturb
 I want Do Not Disturb turned off,deactivate_do_not_disturb
 Bring back notifications by disabling Do Not Disturb,deactivate_do_not_disturb
 
-text,label
 Can you decline the incoming call?,decline_call
 I don't want to answer this call,decline_call
 Refuse the incoming call,decline_call
 
-text,label
 Can you answer the incoming call?,pick_up_call
 I want to answer this call,pick_up_call
 Accept this phone call,pick_up_call
 
-text,label
 Can you play the music?,play_music
 Resume playing my music,play_music
 Start the current track,play_music
 
-text,label
+
 Can you pause the music?,pause_music
 Pause the current track,pause_music
 I want to pause the song,pause_music
 
-text,label
 Can you play the next song?,play_next_song
 Skip to the following track,play_next_song
 Go to the next track,play_next_song
 
-text,label
 Can you play the previous song?,play_previous_song
 Go back to the last song,play_previous_song
 Return to the previous track,play_previous_song
 
-text,label
 Can you increase the volume?,increase_volume
 Turn up the sound,increase_volume
 Increase the audio volume,increase_volume
 
-text,label
 Can you decrease the volume?,decrease_volume
 Turn down the sound,decrease_volume
 Lower the audio volume,decrease_volume
 
-text,label
-Switch to the next app, unknown
-Switch to the following application, unknown
-Move to the next app, unknown
-Turn off the current app, unknown
-Switch to the previous app, unknown
-Turn on the previous application, unknown
-Check my notifications, unknown
-Return to the home screen, unknown
-Make a phone call, unknown
-Open the messaging app, unknown
+Switch to the next app,unknown
+Switch to the following application,unknown
+Move to the next app,unknown
+Turn off the current app,unknown
+Switch to the previous app,unknown
+Turn on the previous application,unknown
+Check my notifications,unknown
+Return to the home screen,unknown
+Make a phone call,unknown
+Open the messaging app,unknown

@@ -10,7 +10,6 @@ Set my phone to Do Not Disturb,activate_do_not_disturb
 Silence notifications using Do Not Disturb,activate_do_not_disturb
 Put the phone in Do Not Disturb mode,activate_do_not_disturb
 
-text,label
 Deactivate Do Not Disturb,deactivate_do_not_disturb
 Turn off Do Not Disturb,deactivate_do_not_disturb
 Disable Do Not Disturb,deactivate_do_not_disturb
@@ -22,7 +21,6 @@ Take my phone out of Do Not Disturb,deactivate_do_not_disturb
 Exit Do Not Disturb mode,deactivate_do_not_disturb
 Resume notifications by turning off Do Not Disturb,deactivate_do_not_disturb
 
-text,label
 Decline the call,decline_call
 Reject the call,decline_call
 Decline this incoming call,decline_call
@@ -34,7 +32,6 @@ Dismiss the incoming call,decline_call
 Reject this phone call,decline_call
 Reject this call,decline_call
 
-text,label
 Pick up the call,pick_up_call
 Answer the call,pick_up_call
 Accept the call,pick_up_call
@@ -46,7 +43,6 @@ Take the call,pick_up_call
 Connect the call,pick_up_call
 Answer my phone,pick_up_call
 
-text,label
 Play the music,play_music
 Start the music,play_music
 Play my music,play_music
@@ -58,7 +54,6 @@ Resume playback,play_music
 Continue the music,play_music
 Please play the music,play_music
 
-text,label
 Pause the music,pause_music
 Pause the song,pause_music
 Stop the music for now,pause_music
@@ -70,7 +65,6 @@ Temporarily stop the music,pause_music
 Pause the current song,pause_music
 Pause the audio,pause_music
 
-text,label
 Play the next song,play_next_song
 Skip to the next song,play_next_song
 Go to the next song,play_next_song
@@ -82,7 +76,6 @@ Play the next track,play_next_song
 Advance to the next song,play_next_song
 Please play the next song,play_next_song
 
-text,label
 Play the previous song,play_previous_song
 Go to the previous song,play_previous_song
 Play the last song,play_previous_song
@@ -94,7 +87,6 @@ Go back one song,play_previous_song
 Return to the last track,play_previous_song
 Please play the previous song,play_previous_song
 
-text,label
 Increase the volume,increase_volume
 Turn the volume up,increase_volume
 Raise the volume,increase_volume
@@ -106,7 +98,6 @@ Raise the sound level,increase_volume
 Please increase the volume,increase_volume
 Make it louder,increase_volume
 
-text,label
 Decrease the volume,decrease_volume
 Turn the volume down,decrease_volume
 Lower the volume,decrease_volume

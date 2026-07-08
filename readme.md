@@ -10,6 +10,7 @@ A lightweight semantic command classifier designed for offline edge deployment. 
 - Sentence embedding generation using all-MiniLM-L6-v2
 - Cosine similarity-based prediction
 - Unknown command rejection using confidence threshold
+- Evaluation using Accuracy, Precision, Recall, F1-score and Confusion Matrix
 - Offline inference
 - Lightweight architecture for edge devices
 
@@ -51,8 +52,7 @@ speech-command-classifier/
 - [x] Sentence embedding generation
 - [x] Cosine similarity classifier
 - [x] Unknown command rejection
-- [ ] Evaluation
-- [ ] Documentation
+- [x] Evaluation
 
 ---
 
