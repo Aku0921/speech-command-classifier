@@ -7,8 +7,8 @@ A lightweight semantic command classifier designed for offline edge deployment. 
 ## Features
 
 - Semantic command classification
+- Sentence embedding generation using all-MiniLM-L6-v2
 - Cosine similarity-based prediction
-- Unknown command rejection using confidence threshold
 - Offline inference
 - Lightweight architecture for edge devices
 
@@ -48,7 +48,7 @@ speech-command-classifier/
 - [x] Dataset creation
 - [x] Dataset loading module
 - [x] Sentence embedding generation
-- [ ] Cosine similarity classifier
+- [x] Cosine similarity classifier
 - [ ] Unknown command rejection
 - [ ] Evaluation
 - [ ] Documentation
