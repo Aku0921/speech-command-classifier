@@ -16,16 +16,40 @@ A lightweight semantic command classifier designed for offline edge deployment. 
 
 ---
 
+## Current Pipeline
+
+```text
+Text Input
+      ↓
+Sentence Embedding (all-MiniLM-L6-v2)
+      ↓
+Cosine Similarity Classifier
+      ↓
+Threshold-based OOS Rejection
+      ↓
+Predicted Command / Unknown
+```
+---
+
 ## Project Structure
 
 ```text
 speech-command-classifier/
 │
 ├── data/
+│   ├── train.csv
+│   └── test.csv
 │
 ├── src/
+│   ├── classifier.py
+│   ├── dataset.py
+│   ├── embeddings.py
+│   ├── evaluation.py
+│   └── main.py
 │
 ├── results/
+│   ├── confusion_matrix.png
+│   └── evaluation_report.txt
 │
 ├── README.md
 ├── requirements.txt
@@ -47,12 +71,22 @@ speech-command-classifier/
 
 ## Current Progress
 
+### Milestone 1 - Baseline Classifier ✅
+
 - [x] Dataset creation
-- [x] Dataset loading module
-- [x] Sentence embedding generation
+- [x] Dataset loading
+- [x] Sentence embeddings
 - [x] Cosine similarity classifier
-- [x] Unknown command rejection
+- [x] Threshold-based OOS rejection
 - [x] Evaluation
+- [x] Confusion matrix generation
+
+### Upcoming Milestones
+
+- [ ] M2 - Noise Robustness & ASR Simulation
+- [ ] M3 - Model Compression & Edge Export
+- [ ] M4 - Extension Commands
+- [ ] M5 - End-to-End Integration
 
 ---
 
@@ -61,3 +95,17 @@ speech-command-classifier/
 ```bash
 pip install -r requirements.txt
 python src/main.py
+```
+---
+
+## Output
+
+Running the project generates:
+
+- Classification accuracy
+- Precision, Recall and F1-score
+- Confusion Matrix
+- `results/evaluation_report.txt`
+- `results/confusion_matrix.png`
+
+---
