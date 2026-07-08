@@ -117,25 +117,3 @@ Lower the sound level,decrease_volume
 Please decrease the volume,decrease_volume
 Make it quieter,decrease_volume
 Reduce the audio volume,decrease_volume
-
-text,label
-How is the weather today?,unknown
-Is it sunny outside?,unknown
-What is the temperature right now?,unknown
-Will it rain today?,unknown
-What is the forecast for today?,unknown
-Set an alarm for 7 AM,unknown
-Remind me to call John at 5 PM,unknown
-Set a timer for 10 minutes,unknown
-What is the time in New York?,unknown
-When is my next meeting?,unknown
-Open the calendar app,unknown
-Open the email app,unknown
-Open the messaging app,unknown
-Check my notifications,unknown
-Open the settings app,unknown
-Send a text message to Sarah,unknown
-Make a phone call to Mike,unknown
-Send an email to my boss,unknown
-Can you tell me a joke?,unknown
-Switch off the lights in the living room,unknown

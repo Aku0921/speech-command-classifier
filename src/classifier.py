@@ -5,7 +5,8 @@ class CosineSimilarityClassifier:
     """
     Classifier based on cosine similarity.
     """
-    def __init__(self) -> None:
+    def __init__(self, threshold: float = 0.75) -> None:
+        self.threshold = threshold
         self.train_embeddings = None
         self.train_labels = None
     def fit(
@@ -21,9 +22,9 @@ class CosineSimilarityClassifier:
     def predict(
         self,
         test_embedding: np.ndarray,
-    ) -> str:
+    ) -> tuple[str, float]:
         """
-        Predict the label for a single embedding.
+        Predict the label and similarity score for a single embedding.
         """
         if self.train_embeddings is None or self.train_labels is None:
             raise ValueError(
@@ -34,4 +35,13 @@ class CosineSimilarityClassifier:
             self.train_embeddings,
         )
         best_match_index = np.argmax(similarities)
-        return self.train_labels[best_match_index]
+        best_similarity = similarities[0][best_match_index]
+        if best_similarity >= self.threshold:
+            return (
+                self.train_labels[best_match_index],
+                float(best_similarity),
+            )
+        return (
+            "unknown",
+            float(best_similarity),
+        )

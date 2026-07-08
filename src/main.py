@@ -35,7 +35,7 @@ def main() -> None:
     )
 
     # Predict the first test sample
-    prediction = classifier.predict(
+    prediction, similarity = classifier.predict(
         test_embeddings[0]
     )
 
@@ -47,6 +47,9 @@ def main() -> None:
 
     print("\nPredicted Label:")
     print(prediction)
+
+    print("\nSimilarity Score:")
+    print(f"{similarity:.4f}")
 
 
 if __name__ == "__main__":
