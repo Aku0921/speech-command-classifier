@@ -12,6 +12,7 @@ def main() -> None:
     # Load both models
     pytorch_model = load_embedding_model("pytorch")
     onnx_model = load_embedding_model("onnx")
+    int8_model = load_embedding_model("int8")
     # Generate train embeddings using PyTorch
     train_embeddings = generate_embeddings(
         pytorch_model,
@@ -31,32 +32,48 @@ def main() -> None:
         onnx_model,
         test_df["text"].tolist(),
     )
+    int8_test_embeddings = generate_embeddings(
+        int8_model,
+        test_df["text"].tolist(),
+    )
     print("\nComparing predictions...\n")
     total = len(test_df)
-    matches = 0
-    for sentence, pt_embedding, onnx_embedding in zip(
+    onnx_matches = 0
+    int8_matches = 0
+    for sentence, pt_embedding, onnx_embedding, int8_embedding in zip(
         test_df["text"],
         pytorch_test_embeddings,
         onnx_test_embeddings,
+        int8_test_embeddings,
     ):
         pt_prediction, _ = classifier.predict(pt_embedding)
         onnx_prediction, _ = classifier.predict(onnx_embedding)
-        match = pt_prediction == onnx_prediction
-        if not match:
-            print(f"Input      : {sentence}")
-            print(f"PyTorch    : {pt_prediction}")
-            print(f"ONNX       : {onnx_prediction}")
+        int8_prediction, _ = classifier.predict(int8_embedding)
+        if pt_prediction == onnx_prediction:
+            onnx_matches += 1
+        else:
+            print(f"ONNX mismatch for: {sentence}")
+            print(f"PyTorch : {pt_prediction}")
+            print(f"ONNX    : {onnx_prediction}")
             print("-" * 60)
-        if match:    
-            matches += 1
+        if pt_prediction == int8_prediction:
+            int8_matches += 1
+        else:
+            print(f"INT8 mismatch for: {sentence}")
+            print(f"PyTorch : {pt_prediction}")
+            print(f"INT8    : {int8_prediction}")
+            print("-" * 60)
     print("\n" + "=" * 60)
     print("Verification Summary")
     print("=" * 60)
-    print(f"Total Samples        : {total}")
-    print(f"Matching Predictions : {matches}")
-    print(f"Prediction Match     : {(matches / total) * 100:.2f}%")
-    if matches == total:
-        print("\nSUCCESS: ONNX model produces identical predictions.")
+    print("\nPyTorch vs ONNX")
+    print(f"Matching Predictions : {onnx_matches}/{total}")
+    print(f"Prediction Match     : {(onnx_matches / total) * 100:.2f}%")
+    print("\nPyTorch vs INT8")
+    print(f"Matching Predictions : {int8_matches}/{total}")
+    print(f"Prediction Match     : {(int8_matches / total) * 100:.2f}%")
+    if onnx_matches == total and int8_matches == total:
+        print("\nSUCCESS: Both ONNX and INT8 models produce identical predictions.")
     else:
         print("\nWARNING: Prediction differences detected.")
 if __name__ == "__main__":

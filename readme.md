@@ -14,7 +14,7 @@ A lightweight semantic command classifier designed for offline edge deployment. 
 - ASR-inspired noise simulation for robustness testing
 - ONNX model export for edge deployment
 - INT8 dynamic quantization
-- ONNX prediction verification against the PyTorch model
+- ONNX and INT8 model verification against the original PyTorch model
 - Offline inference
 - Lightweight architecture for edge devices
 
@@ -84,7 +84,7 @@ speech-command-classifier/
 │   ├── model_size.py
 │   ├── noise_generator.py
 │   ├── quantize_model.py
-│   └── verify_onnx.py
+│   └── verify_model.py
 │
 ├── README.md
 ├── requirements.txt
@@ -127,7 +127,7 @@ Compress the embedding model for efficient edge deployment and export it to ONNX
 - Exported the Sentence Transformer to ONNX format.
 - Applied INT8 dynamic quantization.
 - Compared original and quantized model sizes.
-- Verified that the exported ONNX model produces identical predictions to the original PyTorch model.
+- Verified prediction consistency between the PyTorch, ONNX, and INT8 models.
 
 #### Results
 
@@ -137,7 +137,10 @@ Compress the embedding model for efficient edge deployment and export it to ONNX
 | Quantized INT8 ONNX Size | 21.92 MB |
 | Model Size Reduction | 74.56% |
 | Average PyTorch Latency | 9.14 ms |
-| ONNX Prediction Match | 100% (40 / 40 samples) |
+| PyTorch vs ONNX Prediction Match | 100% (40 / 40) |
+| PyTorch vs INT8 Prediction Match | 95% (38 / 40) |
+
+The exported ONNX model produced identical predictions to the original PyTorch model on all 40 test samples. After INT8 dynamic quantization, the compressed model matched 38 out of 40 predictions (95%), demonstrating a small accuracy trade-off in exchange for a 74.56% reduction in model size
 
 #### Files Generated
 
@@ -164,6 +167,17 @@ Average PyTorch inference latency:
 
 ---
 
+## Model Artifacts
+
+The repository includes the final INT8-quantized ONNX model (`model_int8.onnx`), which is the deployment artifact generated during Milestone 3.
+
+The intermediate FP32 ONNX model (`model.onnx`) is not included to reduce repository size. It can be regenerated at any time using:
+
+```bash
+python src/export_onnx.py
+```
+---
+
 ## How to Run
 
 Install dependencies:
@@ -184,7 +198,7 @@ Benchmark the PyTorch model:
 python src/benchmark.py
 ```
 
-Export the model to ONNX:
+Generate ONNX model:
 
 ```bash
 python src/export_onnx.py
@@ -205,7 +219,7 @@ python src/model_size.py
 Verify ONNX predictions:
 
 ```bash
-python src/verify_onnx.py
+python src/verify_model.py
 ```
 
 ---
@@ -213,7 +227,8 @@ python src/verify_onnx.py
 ## Limitations
 
 - The classifier supports a predefined set of commands.
-- The ONNX export is applied only to the embedding model. The cosine similarity classifier remains implemented in Python.
+- Only the Sentence Transformer embedding model is exported to ONNX. The cosine similarity classifier remains implemented in Python.
+- Dynamic INT8 quantization may introduce small prediction differences for inputs near the cosine similarity threshold.
 - The project is benchmarked on a CPU development machine and has not been evaluated on a physical edge device.
 
 ## Output

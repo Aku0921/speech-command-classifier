@@ -1,7 +1,8 @@
 from typing import List, Literal
 import numpy as np
 from sentence_transformers import SentenceTransformer
-def load_embedding_model(backend: Literal["pytorch", "onnx"] = "pytorch",
+def load_embedding_model(
+    backend: Literal["pytorch", "onnx", "int8"] = "pytorch",
 ) -> SentenceTransformer:
     """
     Load the embedding model.
@@ -18,6 +19,14 @@ def load_embedding_model(backend: Literal["pytorch", "onnx"] = "pytorch",
                 "file_name": "onnx/model.onnx"
             },
         )
+    elif backend == "int8":
+        return SentenceTransformer(
+            "models",
+            backend="onnx",
+            model_kwargs={
+                "file_name": "onnx/model_int8.onnx"
+            },
+        )
     raise ValueError(
         f"Unsupported backend: {backend}"
     )
@@ -30,6 +39,6 @@ def generate_embeddings(
     """
     embeddings = model.encode(
         sentences,
-        convert_to_numpy=True
+        convert_to_numpy=True,
     )
     return embeddings
