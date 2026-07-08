@@ -19,8 +19,11 @@ A lightweight semantic command classifier designed for offline edge deployment. 
 speech-command-classifier/
 │
 ├── data/
+│
 ├── src/
+│
 ├── results/
+│
 ├── README.md
 ├── requirements.txt
 └── .gitignore
