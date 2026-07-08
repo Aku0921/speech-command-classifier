@@ -1,11 +1,26 @@
-from typing import List
+from typing import List, Literal
 import numpy as np
 from sentence_transformers import SentenceTransformer
-def load_embedding_model() -> SentenceTransformer:
+def load_embedding_model(backend: Literal["pytorch", "onnx"] = "pytorch",
+) -> SentenceTransformer:
     """
-    Loading the sentence embedding model.
+    Load the embedding model.
     """
-    return SentenceTransformer("all-MiniLM-L6-v2")
+    if backend == "pytorch":
+        return SentenceTransformer(
+            "all-MiniLM-L6-v2"
+        )
+    elif backend == "onnx":
+        return SentenceTransformer(
+            "models",
+            backend="onnx",
+            model_kwargs={
+                "file_name": "onnx/model.onnx"
+            },
+        )
+    raise ValueError(
+        f"Unsupported backend: {backend}"
+    )
 def generate_embeddings(
     model: SentenceTransformer,
     sentences: List[str],
