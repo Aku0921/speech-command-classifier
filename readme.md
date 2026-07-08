@@ -11,6 +11,7 @@ A lightweight semantic command classifier designed for offline edge deployment. 
 - Cosine similarity-based prediction
 - Unknown command rejection using confidence threshold
 - Evaluation using Accuracy, Precision, Recall, F1-score and Confusion Matrix
+- ASR-inspired noise simulation for robustness testing
 - Offline inference
 - Lightweight architecture for edge devices
 
@@ -20,6 +21,8 @@ A lightweight semantic command classifier designed for offline edge deployment. 
 
 ```text
 Text Input
+      ↓
+ASR Noise Simulation (Evaluation only)
       ↓
 Sentence Embedding (all-MiniLM-L6-v2)
       ↓
@@ -45,11 +48,14 @@ speech-command-classifier/
 │   ├── dataset.py
 │   ├── embeddings.py
 │   ├── evaluation.py
+│   ├── noise_generator.py
 │   └── main.py
 │
 ├── results/
-│   ├── confusion_matrix.png
-│   └── evaluation_report.txt
+│   ├── clean_confusion_matrix.png
+│   └── clean_evaluation_report.txt
+│   ├── noisy_confusion_matrix.png
+│   └── noisy_evaluation_report.txt
 │
 ├── README.md
 ├── requirements.txt
@@ -73,17 +79,15 @@ speech-command-classifier/
 
 ### Milestone 1 - Baseline Classifier ✅
 
-- [x] Dataset creation
-- [x] Dataset loading
-- [x] Sentence embeddings
-- [x] Cosine similarity classifier
-- [x] Threshold-based OOS rejection
-- [x] Evaluation
-- [x] Confusion matrix generation
+- [x] Completed
+
+### Milestone 2 - Noise Robustness ✅
+
+- [x] ASR noise simulation
+- [x] Evaluation on noisy inputs
 
 ### Upcoming Milestones
 
-- [ ] M2 - Noise Robustness & ASR Simulation
 - [ ] M3 - Model Compression & Edge Export
 - [ ] M4 - Extension Commands
 - [ ] M5 - End-to-End Integration
@@ -105,7 +109,9 @@ Running the project generates:
 - Classification accuracy
 - Precision, Recall and F1-score
 - Confusion Matrix
-- `results/evaluation_report.txt`
-- `results/confusion_matrix.png`
+- `results/clean_evaluation_report.txt`
+- `results/clean_confusion_matrix.png`
+- `results/noisy_evaluation_report.txt`
+- `results/noisy_confusion_matrix.png`
 
 ---

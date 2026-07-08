@@ -13,6 +13,7 @@ def evaluate(
     classifier,
     test_embeddings: np.ndarray,
     test_labels: List[str],
+    report_name: str,
 ) -> None:
     """
     Evaluate the classifier on the test dataset.
@@ -55,7 +56,7 @@ def evaluate(
     print("\nConfusion Matrix\n")
     print(matrix)
     RESULTS_DIR.mkdir(exist_ok=True)
-    report_path = RESULTS_DIR / "evaluation_report.txt"
+    report_path = RESULTS_DIR / f"{report_name}_evaluation_report.txt"
     with open(report_path, "w") as file:
         file.write(f"Accuracy: {accuracy:.4f}\n\n")
         file.write("Classification Report\n")
@@ -64,7 +65,7 @@ def evaluate(
         file.write("Confusion Matrix\n")
         file.write(str(matrix))
     print(f"\nEvaluation report saved to: {report_path}")
-    figure_path = RESULTS_DIR / "confusion_matrix.png"
+    figure_path = RESULTS_DIR / f"{report_name}_confusion_matrix.png"
     plt.savefig(
         figure_path,
         dpi=300,
