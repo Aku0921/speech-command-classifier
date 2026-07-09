@@ -1,12 +1,12 @@
 # Lightweight Speech Command Classifier
 
-A lightweight semantic command classifier designed for offline edge deployment. The system classifies predefined voice commands based on their semantic meaning using Sentence Transformers and a cosine similarity-based classifier.
+A lightweight semantic command classifier designed for offline edge deployment. The system classifies 14 predefined voice commands based on their semantic meaning using Sentence Transformers and a cosine similarity-based classifier.
 
 ---
 
 ## Features
 
-- Semantic command classification
+- Semantic command classification, support for 14 semantic voice commands
 - Sentence embedding generation using all-MiniLM-L6-v2
 - Cosine similarity-based prediction
 - Unknown command rejection using confidence threshold
@@ -115,54 +115,73 @@ speech-command-classifier/
 - [x] ASR noise simulation
 - [x] Evaluation on noisy inputs
 
-### Milestone 3 – Model Compression and Edge Export
+### Milestone 3 – Model Compression and Edge Export ✅
+
+- [x] Benchmarked the original PyTorch embedding model.
+- [x] Exported the Sentence Transformer to ONNX format.
+- [x] Applied INT8 dynamic quantization.
+- [x] Compared original and quantized model sizes.
+- [x] Verified prediction consistency between the PyTorch, ONNX, and INT8 models.
+
+### Milestone 4 – Extension Commands and Extensibility ✅
 
 #### Objective
 
-Compress the embedding model for efficient edge deployment and export it to ONNX format.
+Extend the classifier from 10 to 14 semantic commands without modifying the classifier architecture.
 
-#### Steps Performed
+#### Commands Added
 
-- Benchmarked the original PyTorch embedding model.
-- Exported the Sentence Transformer to ONNX format.
-- Applied INT8 dynamic quantization.
-- Compared original and quantized model sizes.
-- Verified prediction consistency between the PyTorch, ONNX, and INT8 models.
+- Increase Brightness
+- Decrease Brightness
+- Start Vehicle
+- Stop Vehicle
 
-#### Results
+#### Changes Required
+
+The extension only required updating the training and testing datasets with examples for the four new commands.
+
+No modifications were required on any other files.
+
+This demonstrates that the architecture is data-driven and supports new commands without requiring changes to the core implementation.
+
+#### Evaluation
+
+The extended classifier was evaluated on all 14 commands using both clean and noisy test sets.
+
+##### Clean Test Results
 
 | Metric | Value |
 |---------|------:|
-| Original ONNX Size | 86.18 MB |
-| Quantized INT8 ONNX Size | 21.92 MB |
-| Model Size Reduction | 74.56% |
-| Average PyTorch Latency | 9.14 ms |
-| PyTorch vs ONNX Prediction Match | 100% (40 / 40) |
-| PyTorch vs INT8 Prediction Match | 95% (38 / 40) |
+| Accuracy | 96.15% |
 
-The exported ONNX model produced identical predictions to the original PyTorch model on all 40 test samples. After INT8 dynamic quantization, the compressed model matched 38 out of 40 predictions (95%), demonstrating a small accuracy trade-off in exchange for a 74.56% reduction in model size
+##### Noisy Test Results
 
-#### Files Generated
+| Metric | Value |
+|---------|------:|
+| Accuracy | 88.46% |
 
-```text
-models/
-└── onnx/
-    ├── model.onnx
-    └── model_int8.onnx
-```
+#### Interference Analysis
 
-#### Benchmark
+The addition of the new commands did not introduce noticeable confusion with semantically similar existing commands.
 
-Average PyTorch inference latency:
-```
+The classification errors were primarily associated with the existing music playback commands under noisy conditions.
 
-9.14 ms
+#### Extensibility Assessment
 
-```
+The classifier architecture scales well because command definitions are stored entirely in the dataset.
+
+Adding new commands only requires:
+
+1. Adding labelled examples to the training dataset.
+2. Adding evaluation samples to the test dataset.
+3. Running the existing pipeline.
+
+No changes to the embedding model, classifier implementation, or deployment pipeline were necessary.
+
+As the number of supported commands grows, semantically similar commands may become increasingly difficult to distinguish. Future improvements could include additional training examples, threshold tuning, or a supervised classifier.
 
 ### Upcoming Milestones
 
-- [ ] M4 - Extension Commands
 - [ ] M5 - End-to-End Integration
 
 ---
@@ -238,6 +257,7 @@ Running the project generates:
 - Classification accuracy
 - Precision, Recall and F1-score
 - Confusion Matrix
+- Evaluation reports for all 14 supported commands
 - `results/clean_evaluation_report.txt`
 - `results/clean_confusion_matrix.png`
 - `results/noisy_evaluation_report.txt`

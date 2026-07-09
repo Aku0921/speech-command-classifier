@@ -1,4 +1,4 @@
-Accuracy: 0.9500
+Accuracy: 0.9615
 
 Classification Report
                            precision    recall  f1-score   support
@@ -6,28 +6,36 @@ Classification Report
   activate_do_not_disturb       1.00      1.00      1.00         3
 deactivate_do_not_disturb       1.00      1.00      1.00         3
              decline_call       1.00      1.00      1.00         3
+      decrease_brightness       1.00      1.00      1.00         3
           decrease_volume       1.00      1.00      1.00         3
+      increase_brightness       1.00      1.00      1.00         3
           increase_volume       1.00      1.00      1.00         3
               pause_music       1.00      1.00      1.00         3
              pick_up_call       1.00      1.00      1.00         3
                play_music       1.00      0.33      0.50         3
            play_next_song       1.00      1.00      1.00         3
        play_previous_song       0.75      1.00      0.86         3
+            start_vehicle       1.00      1.00      1.00         3
+             stop_vehicle       1.00      1.00      1.00         3
                   unknown       0.91      1.00      0.95        10
 
-                 accuracy                           0.95        40
-                macro avg       0.97      0.94      0.94        40
-             weighted avg       0.96      0.95      0.94        40
+                 accuracy                           0.96        52
+                macro avg       0.98      0.96      0.95        52
+             weighted avg       0.97      0.96      0.95        52
 
 Confusion Matrix
-[[ 3  0  0  0  0  0  0  0  0  0  0]
- [ 0  3  0  0  0  0  0  0  0  0  0]
- [ 0  0  3  0  0  0  0  0  0  0  0]
- [ 0  0  0  3  0  0  0  0  0  0  0]
- [ 0  0  0  0  3  0  0  0  0  0  0]
- [ 0  0  0  0  0  3  0  0  0  0  0]
- [ 0  0  0  0  0  0  3  0  0  0  0]
- [ 0  0  0  0  0  0  0  1  0  1  1]
- [ 0  0  0  0  0  0  0  0  3  0  0]
- [ 0  0  0  0  0  0  0  0  0  3  0]
- [ 0  0  0  0  0  0  0  0  0  0 10]]
+[[ 3  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  3  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  3  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  3  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  3  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  3  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  3  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  3  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  3  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  1  0  1  0  0  1]
+ [ 0  0  0  0  0  0  0  0  0  0  3  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  3  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  3  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  3  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0 10]]

@@ -108,3 +108,47 @@ Lower the sound level,decrease_volume
 Please decrease the volume,decrease_volume
 Make it quieter,decrease_volume
 Reduce the audio volume,decrease_volume
+
+Increase the brightness,increase_brightness
+Turn up the brightness,increase_brightness
+Raise the screen brightness,increase_brightness
+Make the screen brighter,increase_brightness
+Brightness up,increase_brightness
+Increase display brightness,increase_brightness
+Raise the brightness level,increase_brightness
+Please increase the brightness,increase_brightness
+Make the display brighter,increase_brightness
+Boost the screen brightness,increase_brightness
+
+Decrease the brightness,decrease_brightness
+Turn down the brightness,decrease_brightness
+Lower the screen brightness,decrease_brightness
+Reduce the brightness,decrease_brightness
+Brightness down,decrease_brightness
+Dim the display,decrease_brightness
+Lower the brightness level,decrease_brightness
+Please decrease the brightness,decrease_brightness
+Make the display dimmer,decrease_brightness
+Reduce screen brightness,decrease_brightness
+
+Start the vehicle,start_vehicle
+Start the car,start_vehicle
+Turn on the engine,start_vehicle
+Switch on the vehicle,start_vehicle
+Start my car,start_vehicle
+Ignite the engine,start_vehicle
+Please start the vehicle,start_vehicle
+Power on the car,start_vehicle
+Begin the engine,start_vehicle
+Start driving,start_vehicle
+
+Stop the vehicle,stop_vehicle
+Stop the car,stop_vehicle
+Turn off the engine,stop_vehicle
+Switch off the vehicle,stop_vehicle
+Shut down the engine,stop_vehicle
+Please stop the vehicle,stop_vehicle
+Power off the car,stop_vehicle
+Kill the engine,stop_vehicle
+End the drive,stop_vehicle
+Park and stop the car,stop_vehicle
