@@ -23,6 +23,11 @@ deactivate_do_not_disturb       1.00      1.00      1.00         3
                 macro avg       0.96      0.87      0.89        52
              weighted avg       0.92      0.88      0.88        52
 
+
+Out-of-Scope Evaluation
+OOS Rejection Rate: 100.00%
+False Rejection Rate: 11.90%
+
 Confusion Matrix
 [[ 2  0  0  0  0  0  0  0  0  0  0  0  0  0  1]
  [ 0  3  0  0  0  0  0  0  0  0  0  0  0  0  0]

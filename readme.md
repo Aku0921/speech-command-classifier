@@ -20,6 +20,29 @@ A lightweight semantic command classifier designed for offline edge deployment. 
 
 ---
 
+## Supported Commands
+
+The classifier currently supports the following semantic commands:
+
+1. Activate Do Not Disturb
+2. Deactivate Do Not Disturb
+3. Pick Up Call
+4. Decline Call
+5. Play Music
+6. Pause Music
+7. Play Next Song
+8. Play Previous Song
+9. Increase Volume
+10. Decrease Volume
+11. Increase Brightness
+12. Decrease Brightness
+13. Start Vehicle
+14. Stop Vehicle
+
+Commands outside these categories are rejected as **unknown** using cosine similarity thresholding.
+
+---
+
 ## Current Pipeline
 
 ```text
@@ -84,7 +107,8 @@ speech-command-classifier/
 │   ├── model_size.py
 │   ├── noise_generator.py
 │   ├── quantize_model.py
-│   └── verify_model.py
+│   ├── verify_model.py
+│   └── predict.py
 │
 ├── README.md
 ├── requirements.txt
@@ -123,81 +147,53 @@ speech-command-classifier/
 - [x] Compared original and quantized model sizes.
 - [x] Verified prediction consistency between the PyTorch, ONNX, and INT8 models.
 
+#### Model Compression Results
+
+| Metric | Value |
+|---------|------:|
+| Original ONNX Model | 86.18 MB |
+| Quantized INT8 Model | 21.92 MB |
+| Model Size Reduction | 74.56% |
+| Average PyTorch Latency | 9.14 ms |
+| PyTorch vs ONNX Prediction Match | 100% |
+| PyTorch vs INT8 Prediction Match | 95% |
+
 ### Milestone 4 – Extension Commands and Extensibility ✅
+
+- [x] Extended the classifier from 10 to 14 semantic commands.
+- [x] Evaluated the extended classifier on clean and noisy datasets.
+- [x] Verified that no changes to the classifier architecture were required.
+- [x] Demonstrated the extensibility of the data-driven pipeline.
+
+### Milestone 5 – End-to-End Integration ✅
 
 #### Objective
 
-Extend the classifier from 10 to 14 semantic commands without modifying the classifier architecture.
+Integrate the complete inference pipeline and provide a single-command interface for semantic command classification.
 
-#### Commands Added
+#### Components
 
-- Increase Brightness
-- Decrease Brightness
-- Start Vehicle
-- Stop Vehicle
+- End-to-end inference using `predict.py`
+- Support for PyTorch, ONNX and INT8 backends
+- Threshold-based Out-of-Scope (OOS) rejection
+- Evaluation on clean and noisy datasets
+- Backend verification against exported models
 
-#### Changes Required
+#### End-to-End Inference
 
-The extension only required updating the training and testing datasets with examples for the four new commands.
-
-No modifications were required on any other files.
-
-This demonstrates that the architecture is data-driven and supports new commands without requiring changes to the core implementation.
-
-#### Evaluation
-
-The extended classifier was evaluated on all 14 commands using both clean and noisy test sets.
-
-##### Clean Test Results
-
-| Metric | Value |
-|---------|------:|
-| Accuracy | 96.15% |
-
-##### Noisy Test Results
-
-| Metric | Value |
-|---------|------:|
-| Accuracy | 88.46% |
-
-#### Interference Analysis
-
-The addition of the new commands did not introduce noticeable confusion with semantically similar existing commands.
-
-The classification errors were primarily associated with the existing music playback commands under noisy conditions.
-
-#### Extensibility Assessment
-
-The classifier architecture scales well because command definitions are stored entirely in the dataset.
-
-Adding new commands only requires:
-
-1. Adding labelled examples to the training dataset.
-2. Adding evaluation samples to the test dataset.
-3. Running the existing pipeline.
-
-No changes to the embedding model, classifier implementation, or deployment pipeline were necessary.
-
-As the number of supported commands grows, semantically similar commands may become increasingly difficult to distinguish. Future improvements could include additional training examples, threshold tuning, or a supervised classifier.
-
-### Upcoming Milestones
-
-- [ ] M5 - End-to-End Integration
-
----
-
-## Model Artifacts
-
-The repository includes the final INT8-quantized ONNX model (`model_int8.onnx`), which is the deployment artifact generated during Milestone 3.
-
-The intermediate FP32 ONNX model (`model.onnx`) is not included to reduce repository size. It can be regenerated at any time using:
+A single command can be used to classify new voice commands:
 
 ```bash
-python src/export_onnx.py
+python src/predict.py "increase the brightness" --backend int8
 ```
+
 ---
 
 ## How to Run
+
+### Requirements
+
+The project was developed and tested using Python 3.11.
 
 Install dependencies:
 
@@ -210,6 +206,17 @@ Run the classifier:
 ```bash
 python src/main.py
 ```
+
+Run inference on a single command:
+
+```bash
+python src/predict.py "increase the brightness" --backend pytorch
+```
+Available backends:
+
+- `pytorch`
+- `onnx`
+- `int8`
 
 Benchmark the PyTorch model:
 
@@ -243,6 +250,98 @@ python src/verify_model.py
 
 ---
 
+## Example Inference
+
+### Example 1
+
+```bash
+python src/predict.py "could you please increase the brightness" --backend pytorch
+```
+```text
+============================================================
+Speech Command Classifier
+============================================================
+Backend    : PYTORCH
+Input      : could you please increase the brightness
+Prediction : increase_brightness
+Similarity : 0.9298
+Status     : ACCEPTED
+```
+
+### Example 2
+
+```bash
+python src/predict.py "what is the weather like today" --backend pytorch    
+```      
+```text
+============================================================
+Speech Command Classifier
+============================================================
+Backend    : PYTORCH
+Input      : what is the weather like today
+Prediction : unknown
+Similarity : 0.1407
+Status     : REJECTED (Out-of-Scope)
+```
+
+### Example 3
+
+```bash
+python src/predict.py "would you decrease the volume" --backend onnx  
+```            
+```text
+============================================================
+Speech Command Classifier
+============================================================
+Backend    : ONNX
+Input      : would you decrease the volume
+Prediction : decrease_volume
+Similarity : 0.8330
+Status     : ACCEPTED
+```
+
+### Example 4
+
+```bash
+python src/predict.py "please start the vehicle" --backend int8 
+```     
+```text             
+============================================================
+Speech Command Classifier
+============================================================
+Backend    : INT8
+Input      : please start the vehicle
+Prediction : start_vehicle
+Similarity : 0.9840
+Status     : ACCEPTED
+```
+
+### Example 5
+
+```bash
+python src/predict.py "set and alarm" --backend int8  
+```     
+```text
+============================================================
+Speech Command Classifier
+============================================================
+Backend    : INT8
+Input      : set and alarm
+Prediction : unknown
+Similarity : 0.4314
+Status     : REJECTED (Out-of-Scope)
+```
+
+---
+
+## Edge Deployment
+
+The exported INT8 ONNX model is intended for deployment on edge devices such as smartphones.
+
+While this repository provides a Python reference implementation, the quantized ONNX model can be integrated into Android or iOS applications using ONNX Runtime Mobile without modifying the classifier architecture.
+
+---
+
 ## Limitations
 
 - The classifier supports a predefined set of commands.
@@ -257,6 +356,7 @@ Running the project generates:
 - Classification accuracy
 - Precision, Recall and F1-score
 - Confusion Matrix
+- OOS rejection statistics
 - Evaluation reports for all 14 supported commands
 - `results/clean_evaluation_report.txt`
 - `results/clean_confusion_matrix.png`
