@@ -147,6 +147,8 @@ speech-command-classifier/
 │
 ├── README.md
 ├── requirements.txt
+├── Self-assessment.pdf
+├── System-architecture.pdf
 └── .gitignore
 ```
 ---
