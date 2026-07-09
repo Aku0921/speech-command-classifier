@@ -1,19 +1,17 @@
-import time
+import argparse
 import statistics
+import time
 from embeddings import (
     load_embedding_model,
     generate_embeddings,
 )
-# Number of benchmark iterations
 NUM_RUNS = 100
-# Number of warm-up runs
 WARMUP_RUNS = 5
-def benchmark_embedding_model() -> None:
+def benchmark_embedding_model(backend: str) -> None:
     print("=" * 50)
-    print("PyTorch Model Benchmark")
+    print(f"{backend.upper()} Model Benchmark")
     print("=" * 50)
-    # Load model
-    model = load_embedding_model()
+    model = load_embedding_model(backend)
     sentence = ["turn on the lights"]
     # Warm-up
     for _ in range(WARMUP_RUNS):
@@ -24,11 +22,15 @@ def benchmark_embedding_model() -> None:
         generate_embeddings(model, sentence)
         end = time.perf_counter()
         timings.append((end - start) * 1000)
-    average = statistics.mean(timings)
-    minimum = min(timings)
-    maximum = max(timings)
-    print(f"Average Latency : {average:.2f} ms")
-    print(f"Minimum Latency : {minimum:.2f} ms")
-    print(f"Maximum Latency : {maximum:.2f} ms")
+    print(f"Average Latency : {statistics.mean(timings):.2f} ms")
+    print(f"Minimum Latency : {min(timings):.2f} ms")
+    print(f"Maximum Latency : {max(timings):.2f} ms")
 if __name__ == "__main__":
-    benchmark_embedding_model()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--backend",
+        choices=["pytorch", "onnx", "int8"],
+        default="pytorch",
+    )
+    args = parser.parse_args()
+    benchmark_embedding_model(args.backend)

@@ -1,3 +1,4 @@
+import argparse
 from dataset import load_datasets
 from embeddings import (
     generate_embeddings,
@@ -7,10 +8,20 @@ from classifier import CosineSimilarityClassifier
 from evaluation import evaluate
 from noise_generator import generate_noisy_sentence
 def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Evaluate Semantic Speech Command Classifier"
+    )
+    parser.add_argument(
+        "--backend",
+        choices=["pytorch", "onnx", "int8"],
+        default="pytorch",
+        help="Embedding backend to use.",
+    )
+    args = parser.parse_args()
     # Load datasets
     train_df, test_df = load_datasets()
     # Load embedding model
-    model = load_embedding_model()
+    model = load_embedding_model(args.backend)
     # Generate embeddings
     train_embeddings = generate_embeddings(
         model,
@@ -40,22 +51,22 @@ def main() -> None:
     )
     # Evaluate classifier
     print("=" * 60)
-    print("Evaluation on Clean Test Set")
+    print(f"{args.backend.upper()} Backend - Clean Test Set")
     print("=" * 60)
     evaluate(
         classifier,
         test_embeddings,
         test_df["label"].tolist(),
-        report_name="clean",
+        report_name=f"{args.backend}_clean",
     )
     print("\n" + "=" * 60)
-    print("Evaluation on Noisy Test Set")
+    print(f"{args.backend.upper()} Backend - Noisy Test Set")
     print("=" * 60)
     evaluate(
         classifier,
         noisy_test_embeddings,
         test_df["label"].tolist(),
-        report_name="noisy",
+        report_name=f"{args.backend}_noisy",
     )
 if __name__ == "__main__":
     main()

@@ -171,14 +171,13 @@ speech-command-classifier/
 
 #### Model Compression Results
 
-| Metric | Value |
-|---------|------:|
-| Original ONNX Model | 86.18 MB |
-| Quantized INT8 Model | 21.92 MB |
-| Model Size Reduction | 74.56% |
-| Average PyTorch Latency | 9.14 ms |
-| PyTorch vs ONNX Prediction Match | 100% |
-| PyTorch vs INT8 Prediction Match | 95% |
+| Backend   |        Model Size | Average Latency | Clean Accuracy | Noisy Accuracy |
+| --------- | ----------------: | --------------: | -------------: | -------------: |
+| PyTorch   | Development Model |     **8.89 ms** |     **96.15%** |     **88.46%** |
+| ONNX      |      **86.18 MB** |     **3.90 ms** |     **96.15%** |     **88.46%** |
+| INT8 ONNX |      **21.92 MB** |     **2.98 ms** |     **94.23%** |     **90.38%** |
+
+Dynamic INT8 quantization reduced the model size by 74.56% while preserving comparable classification performance and achieving the lowest inference latency.
 
 ### Milestone 4 – Extension Commands and Extensibility ✅
 
@@ -225,7 +224,7 @@ pip install -r requirements.txt
 Run the classifier:
 
 ```bash
-python src/main.py
+python src/main.py --backend pytorch
 ```
 
 Run inference on a single command:
@@ -233,17 +232,17 @@ Run inference on a single command:
 ```bash
 python src/predict.py "increase the brightness" --backend pytorch
 ```
+
+Benchmark the PyTorch model:
+
+```bash
+python src/benchmark.py --backend pytorch
+```
 Available backends:
 
 - `pytorch`
 - `onnx`
 - `int8`
-
-Benchmark the PyTorch model:
-
-```bash
-python src/benchmark.py
-```
 
 Generate ONNX model:
 
@@ -355,6 +354,18 @@ Status     : REJECTED (Out-of-Scope)
 
 ---
 
+## Evaluation Summary
+
+The classifier was evaluated on both clean and noisy test datasets using three deployment backends (PyTorch, ONNX, and INT8).
+
+Key observations:
+
+- ONNX achieved the same accuracy as the original PyTorch model while reducing inference latency by more than 50%.
+- INT8 dynamic quantization reduced the model size from 86.18 MB to 21.92 MB while maintaining comparable classification performance.
+- All three backends achieved 100% Out-of-Scope (OOS) rejection on the evaluation dataset.
+
+---
+
 ## Edge Deployment
 
 The exported INT8 ONNX model is intended for deployment on edge devices such as smartphones.
@@ -374,14 +385,21 @@ While this repository provides a Python reference implementation, the quantized 
 
 Running the project generates:
 
-- Classification accuracy
-- Precision, Recall and F1-score
-- Confusion Matrix
-- OOS rejection statistics
-- Evaluation reports for all 14 supported commands
-- `results/clean_evaluation_report.txt`
-- `results/clean_confusion_matrix.png`
-- `results/noisy_evaluation_report.txt`
-- `results/noisy_confusion_matrix.png`
+- Evaluation reports for each backend
+- Confusion matrices
+- Performance metrics
+- OOS statistics
+
+---
+
+## Future Work
+
+Possible future improvements include:
+
+- Real-time microphone input using speech-to-text.
+- Evaluation on physical edge devices such as Raspberry Pi or Android.
+- Support for additional semantic command categories.
+- Automatic threshold optimization.
+- Precomputed training embeddings to reduce startup latency.
 
 ---

@@ -1,0 +1,46 @@
+Accuracy: 0.9038
+
+Classification Report
+                           precision    recall  f1-score   support
+
+  activate_do_not_disturb       1.00      0.67      0.80         3
+deactivate_do_not_disturb       1.00      1.00      1.00         3
+             decline_call       1.00      1.00      1.00         3
+      decrease_brightness       1.00      1.00      1.00         3
+          decrease_volume       0.75      1.00      0.86         3
+      increase_brightness       1.00      1.00      1.00         3
+          increase_volume       1.00      0.67      0.80         3
+              pause_music       1.00      1.00      1.00         3
+             pick_up_call       1.00      0.67      0.80         3
+               play_music       1.00      0.67      0.80         3
+           play_next_song       1.00      1.00      1.00         3
+       play_previous_song       1.00      1.00      1.00         3
+            start_vehicle       1.00      1.00      1.00         3
+             stop_vehicle       1.00      0.67      0.80         3
+                  unknown       0.71      1.00      0.83        10
+
+                 accuracy                           0.90        52
+                macro avg       0.96      0.89      0.91        52
+             weighted avg       0.93      0.90      0.90        52
+
+
+Out-of-Scope Evaluation
+OOS Rejection Rate: 100.00%
+False Rejection Rate: 9.52%
+
+Confusion Matrix
+[[ 2  0  0  0  0  0  0  0  0  0  0  0  0  0  1]
+ [ 0  3  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  3  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  3  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  3  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  3  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  1  0  2  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  3  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  2  0  0  0  0  0  1]
+ [ 0  0  0  0  0  0  0  0  0  2  0  0  0  0  1]
+ [ 0  0  0  0  0  0  0  0  0  0  3  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  3  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  3  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  2  1]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0 10]]
