@@ -95,6 +95,19 @@ Edge Deployment (Android / iOS / Embedded)
 ```
 ---
 
+## Training
+
+No fine-tuning is performed.
+
+The project uses the pretrained
+all-MiniLM-L6-v2 Sentence Transformer.
+
+Training consists of generating
+embeddings for the training dataset
+and storing them for cosine similarity.
+
+---
+
 ## Project Structure
 
 ```text
