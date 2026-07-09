@@ -43,12 +43,10 @@ Commands outside these categories are rejected as **unknown** using cosine simil
 
 ---
 
-## Current Pipeline
+## Inference Pipeline
 
 ```text
 Text Input
-      ↓
-ASR Noise Simulation (Evaluation only)
       ↓
 Sentence Embedding (all-MiniLM-L6-v2)
       ↓
@@ -58,6 +56,28 @@ Threshold-based OOS Rejection
       ↓
 Predicted Command / Unknown
 ```
+---
+
+## Evaluation Pipeline
+
+```text
+Test Dataset
+      ↓
+ASR Noise Simulation
+      ↓
+Sentence Embedding
+      ↓
+Cosine Similarity Classifier
+      ↓
+Threshold-based OOS Rejection
+      ↓
+Performance Evaluation
+      ├── Accuracy
+      ├── Precision / Recall / F1-score
+      ├── Confusion Matrix
+      └── OOS Metrics
+```
+
 ---
 
 ## Model Deployment Pipeline
@@ -70,6 +90,8 @@ Export to ONNX
 INT8 Dynamic Quantization
             ↓
 ONNX Runtime Verification
+            ↓
+Edge Deployment (Android / iOS / Embedded)
 ```
 ---
 
@@ -167,21 +189,20 @@ speech-command-classifier/
 
 ### Milestone 5 – End-to-End Integration ✅
 
-#### Objective
+- [x] Implemented end-to-end inference using `predict.py`.
+- [x] Added support for PyTorch, ONNX and INT8 backends.
+- [x] Implemented threshold-based Out-of-Scope (OOS) rejection.
+- [x] Evaluated the complete pipeline on clean and noisy datasets.
+- [x] Measured OOS rejection and false rejection rates.
+- [x] Verified end-to-end inference across all supported backends.
 
-Integrate the complete inference pipeline and provide a single-command interface for semantic command classification.
+---
 
-#### Components
+## End-to-End Inference
 
-- End-to-end inference using `predict.py`
-- Support for PyTorch, ONNX and INT8 backends
-- Threshold-based Out-of-Scope (OOS) rejection
-- Evaluation on clean and noisy datasets
-- Backend verification against exported models
+The classifier provides a single-command interface for semantic command classification.
 
-#### End-to-End Inference
-
-A single command can be used to classify new voice commands:
+Run inference using:
 
 ```bash
 python src/predict.py "increase the brightness" --backend int8
